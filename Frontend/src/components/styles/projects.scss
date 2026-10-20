@@ -151,11 +151,6 @@ $stage-top: 5rem;
   // 60% of the ORIGINAL stage height (stage height + $stage-top), so the
   // card keeps the same size now that the stage itself is shorter.
   max-height: calc((100% + #{$stage-top}) * 0.6);
-  margin-inline: 5rem;
-  // max-width: 60%;
-  // margin-inline-start: 20%;
-  // align-items: center;
-  // justify-content: center;
   position: absolute;
   inset: $stage-inset;
   display: flex;
@@ -167,10 +162,13 @@ $stage-top: 5rem;
     0 0 32px -22px rgba(116, 240, 208, 0.45);
   will-change: transform, opacity;
 
-  @media (max-width: 768px) {
+  @media (max-width: 860px) {
     inset: $stage-inset-mobile;
     flex-direction: column;
     overflow-y: auto;
+    max-height: none;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
@@ -190,9 +188,14 @@ $stage-top: 5rem;
     rgba(11, 13, 23, 0.28) 100%
   );
 
-  @media (max-width: 768px) {
-    flex: 1 1 auto;
-    padding: 24px;
+  @media (max-width: 1024px) {
+    padding: clamp(20px, 3vw, 28px);
+    gap: 10px;
+  }
+
+  @media (max-width: 860px) {
+    flex: 0 0 auto;
+    padding: clamp(16px, 4vw, 24px);
     gap: 12px;
   }
 }
@@ -201,6 +204,7 @@ $stage-top: 5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
   font-size: 0.78rem;
   letter-spacing: 0.03em;
   flex-shrink: 0;
@@ -349,8 +353,9 @@ $stage-top: 5rem;
   overflow: hidden;
   background: #121720;
 
-  @media (max-width: 768px) {
-    min-height: 220px;
+  @media (max-width: 860px) {
+    min-height: 0;
+    flex: 0 0 clamp(150px, 26vh, 210px);
   }
 
   img {
@@ -358,6 +363,53 @@ $stage-top: 5rem;
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+}
+
+@media (max-width: 600px) {
+  .projects__heading {
+    font-size: 2rem;
+  }
+
+  .projects__card {
+    border-radius: 18px;
+  }
+
+  .projects__panel {
+    gap: 10px;
+  }
+
+  .projects__row {
+    align-items: flex-start;
+    font-size: 0.72rem;
+  }
+
+  .projects__title {
+    margin-bottom: 8px;
+    font-size: clamp(1.25rem, 6vw, 1.6rem);
+  }
+
+  .projects__desc {
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+
+  .projects__tech-list {
+    gap: 6px;
+  }
+
+  .projects__tech-pill {
+    padding: 4px 9px;
+    font-size: 0.7rem;
+  }
+
+  .projects__actions {
+    gap: 8px;
+  }
+
+  .projects__btn {
+    padding: 9px 13px;
+    font-size: 0.78rem;
   }
 }
 
