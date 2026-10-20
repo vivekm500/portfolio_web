@@ -1,0 +1,416 @@
+// .skills {
+//   width: 100%;
+//   height: auto;
+//   display: grid;
+//   grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+//   gap: 2rem;
+//   padding: 3rem clamp(1rem, 5vw, 4rem);
+//   box-sizing: border-box;
+
+//   h2 {
+//     grid-column: 1 / -1;
+//     margin: 0;
+//     color: #b5a3d4;
+//     font-family: Verdana, Geneva, Tahoma, sans-serif;
+//   }
+// }
+
+// /* From Uiverse.io by Shreya-3107 */
+// .skills .card {
+//   width: 100%;
+//   box-sizing: border-box;
+//   height: 300px;
+//   background: #3b3b3c;
+//   padding: 10px;
+//   display: flex;
+//   flex-direction: column;
+//   color: #604848;
+//   border-radius: 15px;
+//   box-shadow: -20px 20px 0px -5px #6e6d71;
+// }
+
+// .skills .card__tags {
+//   width: 100%;
+//   // padding: 1rem;
+// }
+
+// .skills .tag {
+//   display: flex;
+//   flex-wrap: wrap;
+//   gap: 0.5rem;
+//   margin: 0;
+//   padding: 0;
+//   list-style: none;
+// }
+
+// .skills .title {
+//   font-weight: 900;
+//   font-size: 1.7em;
+//   padding: 1rem;
+// }
+
+// .skills .tag__name {
+//   display: inline-block;
+//   color: #fff;
+//   font-size: 1.1em;
+//   background-color: #b5a3d4;
+//   padding: 6px 23px 9px;
+//   border-radius: 70em;
+//   margin: 0;
+//   margin-left: 0px;
+//   position: relative;
+//   text-transform: lowercase;
+//   cursor: pointer;
+//   transition: all 0.3s ease-in-out;
+// }
+
+// .skills .tag__name::before {
+//   content: "";
+//   display: inline-block;
+//   position: absolute;
+//   top: 40%;
+//   width: 7px;
+//   height: 7px;
+//   border-radius: 50%;
+//   background: #2d2d2d;
+// }
+
+// .skills .tag__name::before {
+//   left: 7px;
+// }
+
+// .skills .tag__name::after {
+//   right: 7px;
+// }
+
+// .skills .tag__name:hover {
+//   transform: scale(1.1);
+//   background-color: #181819;
+// }
+
+
+
+// -----------------------------------------------------------------------
+// skills.scss — Technical Skills section
+// Base palette: #4A707A  #7697A0  #94B0B7  #C2C8C5  #DDDDDA + dark teal bases
+// Each card gets its own accent colour (set via --accent / --accent-rgb)
+// so the four categories feel distinct but still sit in the same family.
+// -----------------------------------------------------------------------
+
+$teal-deep: #cb3c03;
+$teal-mid: #e88b0a;
+$teal-light: #d5b123;
+$silver: #d7962d;
+$mist: #ddddda;
+
+$bg: hsla(323, 22%, 52%, 0.512);
+$bg-deep: #918a9000;
+
+$font-display: "Fraunces", "Playfair Display", Georgia, "Times New Roman", serif;
+$font-body: "Inter", "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+$ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+// ---------------------------------------------------------------------
+// Section: background + grid
+// (starts where the Experience section ends, so the two blend together)
+// ---------------------------------------------------------------------
+.skills {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.75rem;
+  // keeps the content lined up with the 1100px column used in Experience
+  padding: 5rem
+    max(clamp(1.25rem, 5vw, 4.5rem), calc((100% - 1100px) / 2)) 6rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  font-family: $font-body;
+  color: $mist;
+  background:
+    radial-gradient(
+      46rem 30rem at 10% 0%,
+      rgba(74, 112, 122, 0.4),
+      transparent 62%
+    ),
+    radial-gradient(
+      50rem 32rem at 95% 100%,
+      rgba(118, 151, 160, 0.24),
+      transparent 62%
+    ),
+    linear-gradient(180deg, $bg-deep 0%, #142329 50%, $bg 100%);
+
+  * {
+    box-sizing: border-box;
+  }
+
+  // Heading across the top
+  h2 {
+    grid-column: 1 / -1;
+    margin: 0 0 0.75rem;
+    font-family: "Segoe Script", "Brush Script MT", "Snell Roundhand", cursive;
+    font-size: clamp(2.5rem, 5vw, 3.7rem);
+    font-weight: 600;
+    letter-spacing: 0.015em;
+    line-height: 1.15;
+    background: linear-gradient(105deg, #fff0cf 0%, #ffbd72 35%, #f08acb 68%, #a9a1ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    filter: drop-shadow(0 4px 16px rgba(240, 138, 203, 0.2));
+  }
+}
+
+// ---------------------------------------------------------------------
+// Card
+// ---------------------------------------------------------------------
+.skills .card {
+  --accent: #94b0b7;
+  --accent-rgb: 148, 176, 183;
+
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 260px;
+  padding: 1.6rem 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  color: $mist;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  background: linear-gradient(
+    160deg,
+    rgba(44, 66, 73, 0.7),
+    rgba(18, 29, 33, 0.85)
+  );
+  border: 1px solid rgba(221, 221, 218, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 20px 40px -26px rgba(0, 0, 0, 0.75),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition:
+    transform 0.45s $ease-out,
+    box-shadow 0.45s ease,
+    border-color 0.45s ease;
+
+  // accent glow in the top-right corner
+  &::before {
+    content: "";
+    position: absolute;
+    top: -40%;
+    right: -30%;
+    width: 80%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(var(--accent-rgb), 0.28),
+      transparent 65%
+    );
+    opacity: 0.55;
+    transition:
+      opacity 0.5s ease,
+      transform 0.7s $ease-out;
+    pointer-events: none;
+  }
+
+  // accent bar along the top that draws in on hover
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), $mist);
+    transform: scaleX(0.25);
+    transform-origin: left;
+    transition: transform 0.6s $ease-out;
+    pointer-events: none;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  &:hover {
+    transform: translateY(-10px);
+    border-color: rgba(var(--accent-rgb), 0.55);
+    box-shadow:
+      0 36px 60px -28px rgba(0, 0, 0, 0.85),
+      0 0 50px -10px rgba(var(--accent-rgb), 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+    &::before {
+      opacity: 1;
+      transform: scale(1.25);
+    }
+
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+
+  // one accent per card (cycles if you add more)
+  &:nth-of-type(4n + 1) {
+    --accent: #94b0b7; // teal
+    --accent-rgb: 148, 176, 183;
+  }
+
+  &:nth-of-type(4n + 2) {
+    --accent: #7fd1c1; // seafoam
+    --accent-rgb: 127, 209, 193;
+  }
+
+  &:nth-of-type(4n + 3) {
+    --accent: #a3b8ee; // soft periwinkle
+    --accent-rgb: 163, 184, 238;
+  }
+
+  &:nth-of-type(4n + 4) {
+    --accent: #e0c99b; // sand
+    --accent-rgb: 224, 201, 155;
+  }
+}
+
+.skills .card__tags {
+  width: 100%;
+}
+
+.skills .title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0;
+  font-family: $font-display;
+  font-weight: 500;
+  font-size: 1.5rem;
+  letter-spacing: -0.01em;
+  color: $mist;
+  transition: color 0.4s ease;
+
+  // small accent marker before the title
+  &::before {
+    content: "";
+    flex-shrink: 0;
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 3px;
+    transform: rotate(45deg);
+    background: linear-gradient(135deg, $mist, var(--accent));
+    box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.7);
+    transition: transform 0.5s $ease-out;
+  }
+}
+
+.skills .card:hover .title {
+  color: #fff;
+
+  &::before {
+    transform: rotate(225deg) scale(1.2);
+  }
+}
+
+// ---------------------------------------------------------------------
+// Tags
+// ---------------------------------------------------------------------
+.skills .tag {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skills .tag__name {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.45rem 1rem 0.5rem 0.85rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: $mist;
+  border-radius: 999px;
+  background: rgba(var(--accent-rgb), 0.12);
+  border: 1px solid rgba(var(--accent-rgb), 0.3);
+  cursor: pointer;
+  transition:
+    transform 0.3s $ease-out,
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+
+  // glowing dot on the left of each pill
+  &::before {
+    content: "";
+    position: static;
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.9);
+    transition:
+      background 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  &:hover {
+    transform: translateY(-4px) scale(1.06);
+    color: $bg;
+    font-weight: 600;
+    background: linear-gradient(135deg, $mist, var(--accent));
+    border-color: transparent;
+    box-shadow: 0 10px 22px -8px rgba(var(--accent-rgb), 0.85);
+
+    &::before {
+      background: $bg;
+      box-shadow: none;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------
+// Mobile
+// ---------------------------------------------------------------------
+@media (max-width: 900px) {
+  .skills {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .skills {
+    padding-top: 4rem;
+    padding-bottom: 4.5rem;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .skills {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ---------------------------------------------------------------------
+// Accessibility: respect reduced-motion preference
+// ---------------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+  .skills *,
+  .skills *::before,
+  .skills *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

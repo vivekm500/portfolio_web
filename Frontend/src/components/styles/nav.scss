@@ -1,0 +1,466 @@
+// -----------------------------------------------------------------------
+// nav.scss — floating glass navbar
+// Palette: #4A707A  #7697A0  #94B0B7  #C2C8C5  #DDDDDA + dark teal bases
+// -----------------------------------------------------------------------
+
+$teal-deep: #4a707a;
+$teal-mid: #7697a0;
+$teal-light: #94b0b7;
+$silver: #c2c8c5;
+$mist: #ddddda;
+
+$bg: #121d21;
+$bg-deep: #0e171a;
+
+$font-display: "Fraunces", "Playfair Display", Georgia, "Times New Roman", serif;
+$font-body: "Inter", "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+$ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+  position: fixed;
+  top: 1rem;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
+  width: min(1200px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 0.7rem 1rem 0.7rem 1.1rem;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  font-family: $font-body;
+  border-radius: 999px;
+  border: 1px solid rgba(221, 221, 218, 0.1);
+  background: linear-gradient(
+    135deg,
+    rgba(44, 66, 73, 0.55),
+    rgba(18, 29, 33, 0.6)
+  );
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  box-shadow:
+    0 10px 30px -18px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition:
+    background 0.4s ease,
+    box-shadow 0.4s ease,
+    border-color 0.4s ease,
+    top 0.4s $ease-out;
+
+  // after scrolling: a touch more solid, deeper shadow, slightly higher up
+  &.is-scrolled {
+    top: 0.65rem;
+    border-color: rgba(148, 176, 183, 0.22);
+    background: linear-gradient(
+      135deg,
+      rgba(30, 47, 53, 0.85),
+      rgba(14, 23, 26, 0.88)
+    );
+    box-shadow:
+      0 18px 40px -16px rgba(0, 0, 0, 0.75),
+      0 0 30px -14px rgba(148, 176, 183, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.logo {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  transition: transform 0.35s $ease-out;
+
+  .logo__mark {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    font-family: $font-display;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: $bg;
+    background: linear-gradient(135deg, $mist, $teal-light 55%, $teal-mid);
+    box-shadow:
+      0 6px 16px -6px rgba(148, 176, 183, 0.7),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    transition:
+      transform 0.5s $ease-out,
+      box-shadow 0.4s ease;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+
+    .logo__mark {
+      transform: rotate(-8deg) scale(1.06);
+      box-shadow:
+        0 10px 22px -6px rgba(148, 176, 183, 0.9),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $teal-light;
+    outline-offset: 4px;
+    border-radius: 50%;
+  }
+}
+
+/* =========================
+   DESKTOP NAV LINKS
+========================= */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* =========================
+   NAV LINK
+========================= */
+
+.nav-link {
+  position: relative;
+
+  padding: 0.55rem 1.05rem 0.7rem;
+  border-radius: 999px;
+
+  color: $silver;
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+
+  transition:
+    color 0.3s ease,
+    background 0.3s ease,
+    transform 0.35s $ease-out;
+
+  // underline bar (shown on the active link)
+  &::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0.28rem;
+    width: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, $teal-light, $mist);
+    transform: translateX(-50%);
+    transition: width 0.4s $ease-out;
+  }
+
+  &:hover {
+    color: #fff;
+    background: rgba(148, 176, 183, 0.12);
+    transform: translateY(-2px);
+
+    &::after {
+      width: 0.9rem;
+    }
+  }
+
+  &.active {
+    color: $mist;
+    background: rgba(148, 176, 183, 0.16);
+
+    &::after {
+      width: 1.3rem;
+      box-shadow: 0 0 10px rgba(148, 176, 183, 0.8);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $teal-light;
+    outline-offset: 2px;
+  }
+}
+
+/* =========================
+   SCROLL PROGRESS LINE
+========================= */
+
+.nav-progress {
+  position: absolute;
+  left: 1.6rem;
+  right: 1.6rem;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(221, 221, 218, 0.06);
+  pointer-events: none;
+
+  .nav-progress__bar {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, $teal-deep, $teal-light, $mist);
+    box-shadow: 0 0 8px rgba(148, 176, 183, 0.6);
+    transform-origin: left;
+    transition: transform 0.15s linear;
+  }
+}
+
+/* =========================
+   HAMBURGER BUTTON
+========================= */
+
+.menu-btn {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+
+  border: 1px solid rgba(221, 221, 218, 0.18);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease;
+
+  .menu-btn__bar {
+    display: block;
+    width: 1.1rem;
+    height: 2px;
+    border-radius: 2px;
+    background: $mist;
+    transition:
+      transform 0.4s $ease-out,
+      opacity 0.25s ease,
+      background 0.3s ease;
+  }
+
+  &:hover {
+    background: rgba(148, 176, 183, 0.16);
+    border-color: rgba(148, 176, 183, 0.5);
+    transform: scale(1.05);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $teal-light;
+    outline-offset: 3px;
+  }
+
+  // three bars -> X
+  &.is-open {
+    background: rgba(148, 176, 183, 0.18);
+    border-color: rgba(148, 176, 183, 0.55);
+
+    .menu-btn__bar {
+      background: #fff;
+
+      &:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+
+      &:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0.2);
+      }
+
+      &:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+    }
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+  .navbar {
+    top: 0.75rem;
+    width: calc(100% - 1.5rem);
+    padding: 0.6rem 0.75rem 0.6rem 0.85rem;
+
+    &.is-scrolled {
+      top: 0.5rem;
+    }
+  }
+
+  .nav-progress {
+    left: 1.2rem;
+    right: 1.2rem;
+  }
+
+  /* Hide desktop links */
+  .nav-links {
+    display: none;
+  }
+
+  /* Show hamburger */
+  .menu-btn {
+    display: flex;
+  }
+
+  /* =========================
+     MOBILE MENU
+  ========================= */
+
+  .nav-links.open {
+    position: absolute;
+    top: calc(100% + 0.65rem);
+    right: 0;
+    width: min(260px, 100%);
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+    padding: 0.7rem;
+
+    background: linear-gradient(
+      160deg,
+      rgba(34, 54, 61, 0.96),
+      rgba(14, 23, 26, 0.98)
+    );
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(148, 176, 183, 0.22);
+    border-radius: 1.25rem;
+    box-shadow:
+      0 24px 50px -16px rgba(0, 0, 0, 0.75),
+      0 0 40px -16px rgba(148, 176, 183, 0.3);
+
+    transform-origin: top right;
+    animation: menuIn 0.35s $ease-out forwards;
+  }
+
+  /* Mobile links — full-width rows, staggered in */
+  .nav-links.open .nav-link {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border-radius: 0.85rem;
+    font-size: 1rem;
+    opacity: 0;
+    animation: linkIn 0.4s $ease-out forwards;
+
+    @for $i from 1 through 6 {
+      &:nth-child(#{$i}) {
+        animation-delay: 0.04s * $i;
+      }
+    }
+
+    // replace the underline with a left accent bar
+    &::after {
+      left: 0.45rem;
+      top: 50%;
+      bottom: auto;
+      width: 3px;
+      height: 0;
+      transform: translateY(-50%);
+      transition: height 0.35s $ease-out;
+    }
+
+    &:hover {
+      transform: translateX(4px);
+
+      &::after {
+        width: 3px;
+        height: 1rem;
+      }
+    }
+
+    &.active {
+      padding-left: 1.5rem;
+
+      &::after {
+        width: 3px;
+        height: 1.2rem;
+      }
+    }
+  }
+}
+
+/* =========================
+   MENU ANIMATION
+========================= */
+
+@keyframes menuIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes linkIn {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.55rem 0.65rem 0.55rem 0.75rem;
+  }
+
+  .nav-links.open {
+    width: 100%;
+  }
+
+  .logo .logo__mark {
+    width: 2.35rem;
+    height: 2.35rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* =========================
+   Accessibility: respect reduced-motion preference
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar,
+  .navbar * {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .nav-links.open .nav-link {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,384 @@
+// .experiences {
+//   width: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 1.5rem;
+//   padding: 2rem 1.25rem 3rem;
+//   background: linear-gradient(180deg, #2d2a2a 0%, #1a1a1a 100%);
+//   color: #111;
+//   box-sizing: border-box;
+
+//   h2{
+//     margin-left: 8rem;
+//     margin-bottom: 0.5rem;
+//     color: chocolate;
+//   }
+
+//   .experience {
+//     // width: 100%;
+//     background: rgba(255, 255, 255, 0.96);
+//     display: flex;
+//     flex-direction: column;
+//     margin: 0 auto;
+//     width: min(1100px, 100%);
+//     border-radius: 1.5rem;
+//     padding: 1.5rem 2rem 1.75rem;
+//     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+//     border: 1px solid rgba(17, 17, 17, 0.08);
+
+//     .upper {
+//       display: flex;
+//       align-items: center;
+//       justify-content: space-between;
+//       gap: 1rem;
+//       padding-bottom: 0.75rem;
+//     }
+
+//     h4 {
+//       margin: 0;
+//       font-size: clamp(1.3rem, 2vw, 1.8rem);
+//       letter-spacing: -0.04em;
+//       color: #111;
+//     }
+
+//     h6 {
+//       margin: 0;
+//       font-size: 0.9rem;
+//       letter-spacing: 0.08em;
+//       text-transform: uppercase;
+//       color: #5b5b5b;
+//       white-space: nowrap;
+//       flex: 1;
+//       text-align: center;
+//     }
+
+//     button {
+//       width: 2.75rem;
+//       height: 2.75rem;
+//       padding: 0;
+//       border: 1px solid #111;
+//       border-radius: 999px;
+//       cursor: pointer;
+//       background: #111;
+//       color: white;
+//       display: flex;
+//       align-items: center;
+//       justify-content: center;
+//       font-weight: 600;
+//       font-size: 0.85rem;
+//       letter-spacing: 0.04em;
+//       transition:
+//         transform 0.18s ease,
+//         box-shadow 0.18s ease;
+//       flex-shrink: 0;
+
+//       svg {
+//         width: 1rem;
+//         height: 1rem;
+//         display: block;
+//         color: currentColor;
+//       }
+
+//       &:hover {
+//         transform: translateY(-1px);
+//         box-shadow: 0 8px 16px rgba(17, 17, 17, 0.18);
+//       }
+//     }
+
+//     > h6 {
+//       font-size: 0.8rem;
+//       text-transform: uppercase;
+//       letter-spacing: 0.08em;
+//       color: #6d6d6d;
+//       padding: 0.5rem 0 0.75rem;
+//       text-align: left;
+//       flex: unset;
+//     }
+
+//     p {
+//       width: 100%;
+//       margin: 0;
+//       color: #2a2a2a;
+//       font-size: 1rem;
+//       line-height: 1.7;
+//     }
+//   }
+// }
+
+
+
+// -----------------------------------------------------------------------
+// experience.scss — Experience section (simple version)
+// Palette: #4A707A  #7697A0  #94B0B7  #C2C8C5  #DDDDDA + dark teal bases
+// -----------------------------------------------------------------------
+
+$teal-deep: #4a707a;
+$teal-mid: #7697a0;
+$teal-light: #94b0b7;
+$silver: #c2c8c5;
+$mist: #ddddda;
+
+$bg: #121d21;
+$bg-deep: #0e171a;
+
+$font-display: "Fraunces", "Playfair Display", Georgia, "Times New Roman", serif;
+$font-body: "Inter", "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+$ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+.experiences {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+  padding: 5rem clamp(1.25rem, 5vw, 4.5rem) 6rem;
+  box-sizing: border-box;
+  font-family: $font-body;
+  color: $mist;
+  background:
+    radial-gradient(
+      50rem 28rem at 90% 0%,
+      rgba(118, 151, 160, 0.25),
+      transparent 62%
+    ),
+    radial-gradient(
+      46rem 30rem at 0% 100%,
+      rgba(74, 112, 122, 0.35),
+      transparent 62%
+    ),
+    linear-gradient(180deg, $bg 0%, #172a30 55%, $bg-deep 100%);
+
+  * {
+    box-sizing: border-box;
+  }
+
+  // Heading — lines up with the left edge of the cards
+  h2 {
+    width: min(1100px, 100%);
+    margin: 0 0 0.75rem;
+    font-family: $font-display;
+    font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    background: linear-gradient(110deg, $mist 0%, $teal-light 60%, $teal-mid 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  // -------------------------------------------------------------------
+  // Card
+  // -------------------------------------------------------------------
+  .experience {
+    display: flex;
+    flex-direction: column;
+    width: min(1100px, 100%);
+    padding: 1.75rem 2rem 1.9rem;
+    border-radius: 1.5rem;
+    background: linear-gradient(
+      160deg,
+      rgba(44, 66, 73, 0.7),
+      rgba(18, 29, 33, 0.82)
+    );
+    border: 1px solid rgba(221, 221, 218, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow:
+      0 18px 36px -22px rgba(0, 0, 0, 0.7),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    transition:
+      transform 0.4s $ease-out,
+      box-shadow 0.4s ease,
+      border-color 0.4s ease;
+
+    // hover: lift + deeper shadow + soft teal glow
+    &:hover {
+      transform: translateY(-6px);
+      border-color: rgba(148, 176, 183, 0.45);
+      box-shadow:
+        0 32px 55px -26px rgba(0, 0, 0, 0.85),
+        0 0 40px -10px rgba(148, 176, 183, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    // company on the left, date + toggle on the right
+    .upper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.5rem;
+    }
+
+    h4 {
+      margin: 0;
+      font-family: $font-display;
+      font-size: clamp(1.35rem, 2.1vw, 1.85rem);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: $mist;
+    }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .date {
+      padding: 0.4rem 0.95rem;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      color: $mist;
+      background: rgba(148, 176, 183, 0.1);
+      border: 1px solid rgba(148, 176, 183, 0.28);
+    }
+
+    // role under the company name
+    .role {
+      margin: 0.5rem 0 0;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: $teal-light;
+    }
+
+    // toggle button
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 2.6rem;
+      height: 2.6rem;
+      padding: 0;
+      border-radius: 999px;
+      border: 1px solid rgba(221, 221, 218, 0.25);
+      background: rgba(255, 255, 255, 0.05);
+      color: $mist;
+      cursor: pointer;
+      transition:
+        transform 0.3s $ease-out,
+        background 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+
+      svg {
+        display: block;
+        width: 1.1rem;
+        height: 1.1rem;
+        transition: transform 0.4s $ease-out;
+      }
+
+      &:hover {
+        transform: translateY(-2px);
+        background: $teal-light;
+        border-color: $teal-light;
+        color: $bg;
+        box-shadow: 0 10px 22px -8px rgba(148, 176, 183, 0.7);
+      }
+
+      &:focus-visible {
+        outline: 2px solid $teal-light;
+        outline-offset: 3px;
+      }
+    }
+
+    &.is-open button svg {
+      transform: rotate(180deg);
+    }
+
+    // collapsible description
+    .details {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transition:
+        grid-template-rows 0.45s $ease-out,
+        opacity 0.3s ease;
+
+      .points {
+        min-height: 0;
+        overflow: hidden;
+      }
+    }
+
+    &.is-open .details {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
+    .points {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      max-width: 80ch;
+
+      // spacing above the list lives on the first item so it collapses cleanly
+      li:first-child {
+        margin-top: 1.25rem;
+      }
+
+      li {
+        position: relative;
+        padding-left: 1.6rem;
+        font-size: 1rem;
+        line-height: 1.7;
+        color: rgba(194, 200, 197, 0.88);
+
+        &::before {
+          content: "";
+          position: absolute;
+          left: 0.15rem;
+          top: 0.62em;
+          width: 0.5rem;
+          height: 0.5rem;
+          background: linear-gradient(135deg, $mist, $teal-mid);
+          transform: rotate(45deg);
+          border-radius: 1px;
+        }
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------
+// Mobile
+// ---------------------------------------------------------------------
+@media (max-width: 700px) {
+  .experiences {
+    padding-top: 4rem;
+    padding-bottom: 4.5rem;
+
+    .experience {
+      padding: 1.4rem 1.25rem 1.5rem;
+
+      .meta {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------
+// Accessibility: respect reduced-motion preference
+// ---------------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+  .experiences *,
+  .experiences *::before,
+  .experiences *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

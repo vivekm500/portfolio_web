@@ -1,0 +1,398 @@
+// -----------------------------------------------------------------------
+// projects.scss — styles for <Projects />
+// A fixed-height, self-scrolling dark container. Scrolling inside it
+// drives a stacking-card animation: the active card sits full-size at
+// the front, previously-scrolled cards tuck into a peeking stack above
+// it, and not-yet-reached cards wait, hidden, underneath the container.
+// -----------------------------------------------------------------------
+
+$viewport-bg: #151923;
+$viewport-radius: 32px;
+$card-radius: 26px;
+$panel-padding: 44px;
+$panel-padding-mobile: 26px;
+$stage-inset: 26px; // gutter of viewport background visible around each card
+$stage-inset-mobile: 14px;
+
+// Height of the sticky heading AND the distance the stage pins below the
+// top of the scroller. Must match STAGE_TOP in Projects.jsx.
+$stage-top: 5rem;
+
+.projects {
+  width: 100%;
+  scroll-margin-top: 6rem;
+  // padding: 64px 24px;
+  box-sizing: border-box;
+  
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+// ---------------------------------------------------------------------
+// The scrollable container — this is what actually scrolls, with
+// its own native scrollbar. All the animation is driven off its scroll
+// position, not a page scroll and not a timer.
+// ---------------------------------------------------------------------
+.projects__viewport {
+  position: relative;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background:
+    radial-gradient(
+      ellipse at 12% 0%,
+      rgba(116, 240, 208, 0.12),
+      transparent 38%
+    ),
+    radial-gradient(
+      ellipse at 92% 12%,
+      rgba(183, 138, 255, 0.12),
+      transparent 36%
+    ),
+    linear-gradient(145deg, #171c27 0%, #11151d 55%, #191725 100%);
+  // border-radius: $viewport-radius;
+  box-shadow:
+    0 30px 60px -30px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+  // Slim visible scrollbar — this is the handle the user actually drags.
+  scrollbar-width: thin;
+  scrollbar-color: rgba(116, 240, 208, 0.42) transparent;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #74f0d0, #b78aff);
+    border-radius: 999px;
+  }
+}
+
+// Tall spacer — gives the viewport real scrollable height, one "page"
+// worth of scroll distance per project.
+.projects__track {
+  position: relative;
+  width: 100%;
+}
+
+.projects__heading {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  // Exactly as tall as the stage's pinned offset, so the stage's natural
+  // position and its pinned position are the same (no jump at the start).
+  height: $stage-top;
+  margin: 0;
+  padding: 0 clamp(1.5rem, 5vw, 4rem);
+  font-family: "Segoe Script", "Brush Script MT", "Snell Roundhand", cursive;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
+  letter-spacing: 0.015em;
+  line-height: 1.15;
+  text-align: left;
+  color: #e5d7ff;
+  text-shadow: 0 0 22px rgba(183, 138, 255, 0.18);
+  background: rgba(18, 21, 30, 0.82);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: clamp(1.5rem, 5vw, 4rem);
+    bottom: 0;
+    width: clamp(4rem, 10vw, 7rem);
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #74f0d0, #8bd9ff 48%, #c9a2ff);
+    box-shadow: 0 0 14px rgba(139, 217, 255, 0.35);
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+
+    &::after {
+      left: 1rem;
+    }
+  }
+}
+
+// Pinned viewing area: stays put while .projects__track scrolls beneath
+// it, and clips cards once they've been pushed up into the stack.
+// Its height is set inline in Projects.jsx as (scroller height - $stage-top)
+// so that pinned offset + height fits exactly inside the scroller.
+.projects__stage {
+  position: sticky;
+  top: $stage-top;
+  width: 100%;
+  overflow: hidden;
+  padding: $stage-inset;
+
+  @media (max-width: 768px) {
+    padding: $stage-inset-mobile;
+  }
+}
+
+// ---------------------------------------------------------------------
+// Individual card — absolutely positioned within the stage, animated
+// purely via the `y` / `scale` / `opacity` motion values set in JS.
+// ---------------------------------------------------------------------
+.projects__card {
+  // 60% of the ORIGINAL stage height (stage height + $stage-top), so the
+  // card keeps the same size now that the stage itself is shorter.
+  max-height: calc((100% + #{$stage-top}) * 0.6);
+  margin-inline: 5rem;
+  // max-width: 60%;
+  // margin-inline-start: 20%;
+  // align-items: center;
+  // justify-content: center;
+  position: absolute;
+  inset: $stage-inset;
+  display: flex;
+  border-radius: $card-radius;
+  overflow: hidden;
+  box-shadow:
+    0 20px 46px -20px rgba(0, 0, 0, 0.66),
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 32px -22px rgba(116, 240, 208, 0.45);
+  will-change: transform, opacity;
+
+  @media (max-width: 768px) {
+    inset: $stage-inset-mobile;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+}
+
+.projects__panel {
+  flex: 0 0 52%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 32px;
+  color: #fff;
+  overflow: hidden;
+  background-image: linear-gradient(
+    138deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.025) 38%,
+    rgba(11, 13, 23, 0.28) 100%
+  );
+
+  @media (max-width: 768px) {
+    flex: 1 1 auto;
+    padding: 24px;
+    gap: 12px;
+  }
+}
+
+.projects__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  flex-shrink: 0;
+}
+
+.projects__category {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.projects__index {
+  opacity: 0.55;
+  font-variant-numeric: tabular-nums;
+}
+
+.projects__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.projects__title {
+  margin: 0 0 10px;
+  font-size: clamp(1.3rem, 1.05rem + 1vw, 1.85rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.projects__desc {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  opacity: 0.88;
+  max-width: 100%;
+}
+
+// ---------------------------------------------------------------------
+// Tech & Tools
+// ---------------------------------------------------------------------
+.projects__tech {
+  flex-shrink: 0;
+}
+
+.projects__tech-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.projects__tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.projects__tech-pill {
+  padding: 5px 12px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  border-radius: 999px;
+  background: rgba(17, 20, 31, 0.24);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+}
+
+// ---------------------------------------------------------------------
+// Action buttons — Live Project / Source Code
+// ---------------------------------------------------------------------
+.projects__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  flex-shrink: 0;
+  padding-top: 4px;
+}
+
+.projects__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.25s ease, background 0.25s ease,
+    border-color 0.25s ease, opacity 0.25s ease;
+
+  .projects__btn-icon {
+    transition: transform 0.25s ease;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.projects__btn--primary {
+  background: linear-gradient(115deg, #74f0d0, #8bd9ff 58%, #c9a2ff);
+  color: #121720;
+  box-shadow: 0 6px 18px -10px rgba(116, 240, 208, 0.9);
+
+  &:hover {
+    box-shadow: 0 9px 22px -10px rgba(183, 138, 255, 0.8);
+  }
+
+  &:hover .projects__btn-icon {
+    transform: translate(2px, -2px);
+  }
+}
+
+.projects__btn--ghost {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(226, 218, 255, 0.52);
+
+  &:hover {
+    background: rgba(183, 138, 255, 0.16);
+    border-color: #c9a2ff;
+  }
+
+  &:hover .projects__btn-icon {
+    transform: translateX(-3px);
+  }
+}
+
+// ---------------------------------------------------------------------
+// Image side
+// ---------------------------------------------------------------------
+.projects__media {
+  position: relative;
+  flex: 1 1 auto;
+  overflow: hidden;
+  background: #121720;
+
+  @media (max-width: 768px) {
+    min-height: 220px;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// ---------------------------------------------------------------------
+// External progress dots (click to jump the viewport's scroll position)
+// ---------------------------------------------------------------------
+.projects__dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 20px 0 28px;
+}
+
+.projects__dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: rgba(220, 222, 235, 0.35);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease;
+
+  &:hover {
+    background: linear-gradient(90deg, #74f0d0, #b78aff);
+    transform: scale(1.2);
+  }
+}
+
+// ---------------------------------------------------------------------
+// Accessibility: respect reduced-motion preference
+// ---------------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+  .projects__card {
+    transition-duration: 0.01ms !important;
+  }
+}

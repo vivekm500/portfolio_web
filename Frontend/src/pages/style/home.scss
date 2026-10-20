@@ -1,0 +1,682 @@
+// -----------------------------------------------------------------------
+// home.scss — hero section styles
+// Palette (from the swatch image):
+//   #4A707A  deep teal      #7697A0  mid teal      #94B0B7  light teal
+//   #C2C8C5  silver         #DDDDDA  mist
+// Plus two very dark teal bases (derived from #4A707A) so the light
+// tones have enough contrast to read on the dark background.
+// -----------------------------------------------------------------------
+
+// Palette
+$teal-deep: #31515a;
+$teal-mid: #b78aff;
+$teal-light: #74f0d0;
+$silver: #2ad1ef;
+$mist: #0a0a0b;
+
+// Dark bases (same hue as $teal-deep, much darker)
+$bg: #121d21;
+$surface: #1a2228;
+
+// Roles
+$text: #ddddda; // headings, strong text
+$text-dim: #d4d5dc;
+$accent: #74f0d0;
+$accent-strong: #b78aff;
+$border: rgba(240, 240, 242, 0.14);
+
+$font-display: "Fraunces", "Playfair Display", Georgia, "Times New Roman", serif;
+$font-body: "Inter", "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+$ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge legacy */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.home-page {
+  position: relative;
+  display: block;
+  isolation: isolate;
+  min-height: 100vh;
+  background-color: transparent;
+  font-family: $font-body;
+}
+
+// ---------------------------------------------------------------------
+// Keyframes
+// ---------------------------------------------------------------------
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulseDot {
+  0% {
+    box-shadow: 0 0 0 0 rgba(116, 240, 208, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(116, 240, 208, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(116, 240, 208, 0);
+  }
+}
+
+@keyframes arrowBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+}
+
+@keyframes floatCard {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+// ---------------------------------------------------------------------
+// Layout
+// ---------------------------------------------------------------------
+.home {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  align-items: center;
+  min-height: 100vh;
+  padding: 6rem clamp(1.5rem, 5vw, 4.5rem) 3rem;
+  gap: 2rem;
+  background-color: transparent;
+
+  .left,
+  .right {
+    position: relative;
+    z-index: 2;
+  }
+
+  // -------------------------------------------------------------------
+  // LEFT: intro text, buttons, socials
+  // -------------------------------------------------------------------
+  .left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2rem;
+
+    .text {
+      margin: 0;
+      color: $text;
+
+      h1 {
+        margin: 0;
+        font-family: $font-display;
+        font-size: clamp(2.6rem, 5.2vw, 4.4rem);
+        font-weight: 500;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        color: $text;
+        animation: fadeUp 0.9s $ease-out both;
+
+        .name {
+          background: linear-gradient(
+            108deg,
+            #fff4e8 2%,
+            #74f0d0 38%,
+            #83b9ff 70%,
+            #d69bff 100%
+          );
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          color: transparent;
+        }
+      }
+
+      h2 {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.9rem;
+        margin: 1rem 0 0;
+        font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: $accent;
+        animation: fadeUp 0.9s $ease-out 0.12s both;
+
+        &::before {
+          content: "";
+          width: 2.5rem;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, $accent);
+        }
+      }
+
+      p {
+        max-width: 54ch;
+        margin: 1.75rem 0 0;
+        font-size: 1.08rem;
+        line-height: 1.75;
+        color: $text-dim;
+        animation: fadeUp 0.9s $ease-out 0.24s both;
+
+        .hl {
+          font-weight: 500;
+          white-space: nowrap;
+
+          // "gold" class name kept so Home.jsx doesn't need to change
+          &--gold {
+            color: $teal-light;
+          }
+
+          &--sage {
+            color: $silver;
+          }
+        }
+      }
+    }
+
+    // -----------------------------------------------------------------
+    // Buttons
+    // -----------------------------------------------------------------
+    .btn1 {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.9rem;
+      margin: 0;
+      animation: fadeUp 0.9s $ease-out 0.36s both;
+
+      .btn {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        height: 3rem;
+        padding: 0 1.6rem;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        font-family: inherit;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        cursor: pointer;
+        overflow: hidden;
+        isolation: isolate;
+        transition:
+          transform 0.35s $ease-out,
+          box-shadow 0.35s ease,
+          background-color 0.3s ease,
+          border-color 0.3s ease,
+          color 0.3s ease;
+
+        &:active {
+          transform: translateY(0) scale(0.97);
+        }
+
+        &:focus-visible {
+          outline: 2px solid $teal-light;
+          outline-offset: 3px;
+        }
+
+        .btn__icon {
+          flex-shrink: 0;
+          transition: transform 0.35s $ease-out;
+        }
+      }
+
+      // Primary — soft teal gradient with a shimmer sweep on hover
+      .btn--primary {
+        background: linear-gradient(115deg, #74f0d0 0%, #8bd9ff 52%, #c9a2ff 100%);
+        color: #172321;
+        box-shadow: 0 8px 26px -10px rgba(116, 240, 208, 0.62);
+
+        &::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          z-index: -1;
+          background: linear-gradient(
+            110deg,
+            transparent 30%,
+            rgba(255, 255, 255, 0.6) 50%,
+            transparent 70%
+          );
+          transform: translateX(-120%);
+          transition: transform 0.7s ease;
+        }
+
+        &:hover {
+          transform: translateY(-3px);
+          box-shadow:
+            0 12px 30px -10px rgba(116, 240, 208, 0.58),
+            0 0 28px -12px rgba(183, 138, 255, 0.72);
+
+          &::before {
+            transform: translateX(120%);
+          }
+
+          .btn__icon--down {
+            animation: arrowBounce 0.9s ease-in-out infinite;
+          }
+        }
+      }
+
+      // Outline — fills with a teal wash from the bottom on hover
+      .btn--outline {
+        background: transparent;
+        color: $text;
+        border-color: rgba(240, 240, 242, 0.28);
+
+        &::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          z-index: -1;
+          background: linear-gradient(
+            110deg,
+            rgba(116, 240, 208, 0.14),
+            rgba(183, 138, 255, 0.13)
+          );
+          transform: translateY(101%);
+          transition: transform 0.4s $ease-out;
+        }
+
+        &:hover {
+          transform: translateY(-3px);
+          border-color: $teal-light;
+          color: $teal-light;
+
+          &::before {
+            transform: translateY(0);
+          }
+
+          .btn__icon--right {
+            transform: translateX(5px);
+          }
+        }
+      }
+
+      // Ghost — text link with an animated underline
+      .btn--ghost {
+        padding: 0 0.5rem;
+        background: transparent;
+        color: $silver;
+        border-radius: 0.5rem;
+
+        &::after {
+          content: "";
+          position: absolute;
+          left: 0.5rem;
+          right: 0.5rem;
+          bottom: 0.55rem;
+          height: 1px;
+          background: $teal-light;
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.4s $ease-out;
+        }
+
+        &:hover {
+          color: $teal-light;
+
+          &::after {
+            transform: scaleX(1);
+          }
+
+          .btn__icon--diag {
+            transform: translate(3px, -3px);
+          }
+        }
+      }
+    }
+
+    // -----------------------------------------------------------------
+    // Social icons (rendered by <SocialCard />)
+    // -----------------------------------------------------------------
+    .btn2 {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0;
+      margin: 0;
+      animation: fadeUp 0.9s $ease-out 0.48s both;
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: $silver;
+        transition:
+          color 0.3s ease,
+          transform 0.35s $ease-out;
+
+        &:hover {
+          color: $teal-light;
+          transform: translateY(-3px);
+        }
+      }
+    }
+  }
+
+  // -------------------------------------------------------------------
+  // RIGHT: profile card
+  // -------------------------------------------------------------------
+  .right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 1.1s ease 0.2s both;
+
+    // soft teal glow sitting behind the card
+    &::before {
+      content: "";
+      position: absolute;
+      width: 130%;
+      aspect-ratio: 1;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(
+        circle,
+        rgba(116, 240, 208, 0.2) 0%,
+        rgba(183, 138, 255, 0.08) 42%,
+        transparent 68%
+      );
+      filter: blur(30px);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .right-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      width: 100%;
+      max-width: 390px;
+      height: auto;
+      margin: 0;
+      padding: 0.6rem;
+      border-radius: 1.75rem;
+      border: 1px solid $border;
+      box-sizing: border-box;
+      overflow: hidden;
+      background: radial-gradient(
+        ellipse at 50% 8%,
+        rgba(51, 91, 100, 0.96) 0%,
+        rgba(43, 42, 67, 0.96) 48%,
+        rgba(26, 34, 40, 0.98) 100%
+      );
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow:
+        0 40px 70px -35px rgba(0, 0, 0, 0.8),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+      animation: floatCard 7s ease-in-out 1.2s infinite;
+      transition:
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+
+      &:hover {
+        border-color: rgba(116, 240, 208, 0.52);
+        box-shadow:
+          0 40px 70px -35px rgba(0, 0, 0, 0.8),
+          0 0 40px -8px rgba(116, 240, 208, 0.28),
+          0 0 48px -20px rgba(183, 138, 255, 0.35),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        animation-play-state: paused;
+      }
+
+      // -----------------------------------------------------------------
+      // Photo
+      // -----------------------------------------------------------------
+      .image {
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        width: 100%;
+        aspect-ratio: 1 / 1.05;
+        max-height: 44vh;
+        margin: 0;
+        border-radius: 1.2rem;
+        overflow: hidden;
+        background:
+          radial-gradient(
+            ellipse at 50% 12%,
+            rgba(116, 240, 208, 0.42),
+            rgba(183, 138, 255, 0.12) 52%,
+            transparent 64%
+          ),
+          linear-gradient(180deg, #31515a 0%, #25263d 55%, #1a2228 100%);
+
+        // fade the bottom of the photo into the card
+        &::after {
+          content: "";
+          position: absolute;
+          inset: auto 0 0 0;
+          height: 30%;
+          background: linear-gradient(
+            to top,
+            rgba(18, 29, 33, 0.72),
+            transparent
+          );
+          pointer-events: none;
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          object-fit: cover;
+          object-position: center top;
+          transition: transform 0.8s $ease-out;
+        }
+
+        .status {
+          position: absolute;
+          top: 0.8rem;
+          left: 0.8rem;
+          z-index: 2;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.35rem 0.75rem;
+          border-radius: 999px;
+          font-size: 0.72rem;
+          font-weight: 600;
+          letter-spacing: 0.04em;
+          color: $text;
+          background: rgba(14, 24, 28, 0.62);
+          border: 1px solid rgba(240, 240, 242, 0.16);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+
+          .status__dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: $teal-light;
+            animation: pulseDot 2s ease-out infinite;
+          }
+        }
+      }
+
+      &:hover .image img {
+        transform: scale(1.04);
+      }
+
+      // -----------------------------------------------------------------
+      // Info blocks under the photo
+      // -----------------------------------------------------------------
+      .desc {
+        position: static;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 0.6rem;
+        width: 100%;
+        height: auto;
+        box-sizing: border-box;
+
+        .desc1,
+        .desc2 {
+          position: static;
+          width: 100%;
+          height: auto;
+          margin: 0;
+          padding: 0.85rem 1rem;
+          border-radius: 1rem;
+          box-sizing: border-box;
+          overflow: hidden;
+        }
+
+        // name + role + blurb
+        .desc1 {
+          background: rgba(240, 240, 242, 0.045);
+          border: 1px solid rgba(240, 240, 242, 0.09);
+
+          h4 {
+            margin: 0;
+            font-family: $font-display;
+            font-size: 1.15rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            color: $text;
+          }
+
+          h6 {
+            margin: 0.15rem 0 0;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: $accent;
+          }
+
+          p {
+            margin: 0.6rem 0 0;
+            padding: 0;
+            font-size: 0.86rem;
+            line-height: 1.55;
+            color: $text-dim;
+          }
+        }
+
+        // education
+        .desc2 {
+          background: linear-gradient(
+            115deg,
+            rgba(116, 240, 208, 0.13),
+            rgba(183, 138, 255, 0.12),
+            rgba(255, 200, 162, 0.06)
+          );
+          border: 1px solid rgba(116, 240, 208, 0.28);
+
+          h6 {
+            margin: 0;
+            padding: 0;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            color: $accent;
+          }
+
+          h4 {
+            margin: 0.25rem 0 0;
+            padding: 0;
+            font-size: 1rem;
+            font-weight: 600;
+            color: $text;
+          }
+
+          p {
+            margin: 0.2rem 0 0;
+            padding: 0;
+            font-size: 0.84rem;
+            color: $text-dim;
+          }
+        }
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------
+// Tablet / mobile
+// ---------------------------------------------------------------------
+@media (max-width: 960px) {
+  .home {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding-top: 6.5rem;
+    padding-bottom: 4rem;
+    gap: 3.5rem;
+
+    .right .right-container {
+      max-width: 420px;
+
+      .image {
+        max-height: 52vh;
+      }
+    }
+  }
+}
+
+@media (max-width: 520px) {
+  .home .left .btn1 {
+    width: 100%;
+
+    .btn--primary,
+    .btn--outline {
+      flex: 1 1 auto;
+      justify-content: center;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------
+// Accessibility: respect reduced-motion preference
+// ---------------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+  .home *,
+  .home *::before,
+  .home *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
